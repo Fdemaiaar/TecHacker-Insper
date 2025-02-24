@@ -1,0 +1,7 @@
+# Port Scanner Project - Requirements
+# Recomendado: Python 3.6 ou superior
+# Todas as bibliotecas utilizadas são nativas:
+# - socket
+# - tkinter (incluindo ttk e scrolledtext)
+#
+# Nenhuma dependência externa é necessária.
