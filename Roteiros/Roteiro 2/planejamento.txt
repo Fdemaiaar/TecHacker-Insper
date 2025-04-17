@@ -1,0 +1,172 @@
+Fase 1 – Pesquisa e Planejamento (até 31/03)
+1.1 Responder às Perguntas de Pesquisa
+Ferramentas adicionais (5)
+
+TheHarvester (coleta emails, subdomínios)
+
+Shodan CLI (busca IoT e serviços expostos)
+
+dnsenum / sublist3r (enumeração de DNS e subdomínios)
+
+wafw00f (identifica WAFs)
+
+nikto ou sslyze (varredura de vulnerabilidades HTTP/SSL)
+
+Ação: Para cada uma, descreva um caso real (ex.: “usei theHarvester para pente fino em e‑mails corporativos antes de um test X”).
+
+SYN Scan vs TCP Connect Scan
+
+SYN Scan (-sS): Meio‑aberto, não completa o handshake. Mais furtivo, evita logs de conexão.
+
+TCP Connect Scan (-sT): Usa o socket padrão do SO, completa o handshake. Mais fácil de detectar, mas funciona sem privilégios de root.
+
+Ação: Indique cenários de uso: SYN para testes silenciosos em rede interna; TCP Connect quando não se tem privilégios de root.
+
+Evitar Detecção por IPS
+
+Técnicas:
+
+Fragmentação de pacotes (-f no nmap)
+
+Variação de intervalos e cadência (--scan-delay, --max-rate)
+
+Uso de fontes rotativas (VPNs, proxies)
+
+Randomização de portas de origem
+
+Impacto: Cada técnica reduz a taxa de detecção, mas pode aumentar o tempo total de scan.
+
+1.2 Definir Ferramentas a Integrar
+Obrigatório: módulo PortScan (do Roteiro 1)
+
+4+ adicionais (mínimo): escolher 4 entre: WHOIS, DNS enumeration (dnsenum/sublist3r), Shodan CLI, theHarvester, wafw00f, nikto, sslyze, masscan, dirsearch, wappalyzer CLI.
+
+Decisão: CLI em Python com menus (ex.: biblioteca inquirer ou prompt_toolkit), ou GUI simples (Tkinter ou PyQt).
+
+Fase 2 – Desenvolvimento (01/04 a 15/04)
+2.1 Estrutura de Projeto e Modularização
+kotlin
+Copiar
+Editar
+app_recon/
+├── core/
+│   ├── portscan.py       # módulo legado do Roteiro 1
+│   ├── whois_lookup.py
+│   ├── dns_enum.py
+│   ├── subdomain_scan.py
+│   ├── waf_detection.py
+│   └── ...
+├── cli.py                # ponto de entrada com menu
+├── utils.py              # funções compartilhadas (parsing, logging)
+├── requirements.txt
+└── README.md             # instruções gerais do repositório
+Boa prática: cada ferramenta em seu módulo, funções expostas padronizadas (run(args)).
+
+2.2 Implementação dos Módulos
+PortScan
+
+Importar e ajustar o portscanner.py como função core.portscan.run(target, ports, proto).
+
+WHOIS Lookup
+
+Usar python-whois ou chamada a whois via subprocess.
+
+DNS Enumeration
+
+Invocar dnsenum ou implementar consulta via dnspython.
+
+Subdomain Scanner
+
+Usar sublist3r ou API do VirusTotal/Shodan.
+
+WAF Detection
+
+Integrar wafw00f via subprocess ou import.
+
+(Opcional) Nikto ou SSlyze
+
+Expor como ferramenta de vulnerabilidade HTTP/SSL.
+
+2.3 Interface CLI
+Menu principal:
+
+text
+Copiar
+Editar
+1) PortScan
+2) WHOIS Lookup
+3) DNS Enumeration
+4) Subdomain Scan
+5) WAF Detection
+6) Exit
+Ao escolher, solicitar parâmetros (ex.: host, intervalo de portas) e chamar core.<ferramenta>.run().
+
+Erro & Logs: use logging para registrar saída e erros.
+
+2.4 Testes Unitários e de Integração
+Para cada módulo, crie um script de teste (pode usar pytest) que:
+
+Valide respostas esperadas em cenários controlados (p. ex. 127.0.0.1).
+
+Assegure modularidade e tratamento de exceções.
+
+2.5 Documentação Básica
+README.md no repositório principal:
+
+Como criar e ativar virtualenv
+
+pip install -r requirements.txt
+
+Como executar python cli.py
+
+requirements.txt com dependências exatas (p. ex. dnspython==2.3.0, python-whois, inquirer, etc.).
+
+Fase 3 – Entrega & Relatório (16/04 a 28/04)
+3.1 Código-fonte no GitHub
+Organize commits claros e descritivos (“feat: add whois module”, “test: dns enum tests”).
+
+Use tags (v1.0) e inclua LICENSE (MIT ou similar).
+
+3.2 Documentação Técnica e Manual do Usuário
+No repositório, pasta docs/ ou no próprio README:
+
+Descrição de cada ferramenta integrada.
+
+Exemplos de uso (com comandos e saídas esperadas).
+
+Arquitetura em diagrama simples (p. ex. usando ASCII ou link para imagem).
+
+3.3 Relatório Final (PDF ou Word)
+Deve conter:
+
+Respostas às Perguntas de Pesquisa (Seção 1)
+
+Arquitetura e Decisões de Design
+
+Organização modular, escolha da CLI, bibliotecas usadas.
+
+Análise das Ferramentas Integradas
+
+Breve descrição de cada módulo e casos de uso.
+
+Resultados dos Testes
+
+Capturas de tela ou trechos de saída de cada ferramenta.
+
+Demonstra que tudo funciona sem erros.
+
+3.4 Cronograma de Entrega
+28/04/2025: confirmar que todo o repositório (código + docs + relatório) está enviado no Blackboard e GitHub.
+
+Critérios para Nota 9–10
+Completo e Robustez: todos os 5 módulos de reconhecimento funcionando sem bugs.
+
+Respostas Detalhadas: pesquisa com exemplos reais e justificativas.
+
+Interface Intuitiva: menus claros, validações de entrada, mensagens de erro compreensíveis.
+
+Código Limpo & Modular: funções/pacotes bem definidos, documentação inline e testes automatizados.
+
+Documentação & Relatório de Alta Qualidade: explicito, organizado, demonstrações de funcionamento.
+
+Seguindo esse passo a passo, você garantirá uma entrega sólida e bem estruturada, atingindo com folga a nota máxima no Roteiro 1. Bom trabalho!
