@@ -145,13 +145,3 @@ Carregando vulnerabilidades...
 * **Logging**: Todas as operações importantes e erros são registrados no arquivo `app_recon.log`. Isso é gerenciado de forma centralizada pela função `log()` no módulo `utils.py`.
 * **Tratamento de Erros**: O aplicativo tenta lidar com erros de forma graciosa, fornecendo feedback claro ao usuário. Isso inclui fallbacks e mensagens específicas para falhas conhecidas (por exemplo, um erro de CSRF ao usar o `Sublist3r` para a varredura de subdomínios).
 * **Loading Indicators**: Indicadores visuais como “Carregando…” são exibidos na GUI antes de iniciar operações que podem levar mais tempo para serem concluídas, melhorando a experiência do usuário.
-
-## Contribuição
-
-Pull requests são bem-vindos! Sinta-se à vontade para corrigir bugs, melhorar a interface do usuário ou sugerir e implementar novos módulos de ferramentas (por exemplo, integração com `masscan`, `sslyze`, etc.).
-
-1.  Faça um Fork do repositório.
-2.  Crie uma branch para sua feature (`git checkout -b feature/nova-ferramenta`).
-3.  Faça commit de suas mudanças (`git commit -am 'Adiciona nova ferramenta X'`).
-4.  Faça push para a branch (`git push origin feature/nova-ferramenta`).
-5.  Abra um Pull Request.
