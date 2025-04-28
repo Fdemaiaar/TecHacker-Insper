@@ -1,11 +1,19 @@
-import whois
+# core/whois_lookup.py
+
+import subprocess
 
 def run(domain):
     """
-    Retorna dados WHOIS do domínio.
+    Executa o comando 'whois' via subprocess e retorna a saída.
     """
     try:
-        w = whois.whois(domain)
-        return w.text
+        proc = subprocess.run(
+            ['whois', domain],
+            capture_output=True,
+            text=True,
+            timeout=10
+        )
+        # Retorna stdout se houver, senão stderr (mensagens de erro do whois)
+        return proc.stdout or proc.stderr
     except Exception as e:
         return f"Error: {e}"
